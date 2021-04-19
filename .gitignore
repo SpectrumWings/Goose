@@ -1,0 +1,10 @@
+/config.json
+/*.png
+/*.xlsx
+/*.csv
+/*.log
+/src/data/*
+/src/images/*
+/.idea
+/src/__pycache__
+*.h
