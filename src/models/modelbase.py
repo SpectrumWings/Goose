@@ -30,11 +30,14 @@ class modelbase():
     def __init__(self, model_type: str = 'mobile'):
         self.model = None
         self.name = ""
+        #gpus = tf.config.experimental.list_physical_devices('GPU') 
+        #tf.config.experimental.set_memory_growth(gpus[0], True)
 
     def mobile_model_setup(self):
         self.model = tf.keras.applications.mobilenet.MobileNet()
         x = self.model.layers[-model_end_slice].output
         output = Dense(units=num_possible_results, activation='softmax')(x)
+        self.model = Model(inputs=self.model.input, outputs=output)
         self.name = "mobile"
     
     def lock_layers(self, num):
@@ -50,21 +53,36 @@ class modelbase():
 
     def train_model(self, train, valid, test):
         train_batches, valid_batches, test_batches = batch_image_preprocessor(self.name, train, valid, test)
-        lock_layers(23)
+        self.lock_layers(23)
 
         self.model.compile(optimizer=Adam(learning_rate=learning_rate), loss='categorical_crossentropy', metrics=['accuracy'])
-        model.fit(x=train_batches, validation_data=valid_batches, epochs=30, verbose=2)
+        self.model.fit(x=train_batches, validation_data=valid_batches, epochs=epoch_count, verbose=2)
         
 
     def determine_image(self, path):
         preprocessed_image = prepare_image(path)
+        
         predictions = self.model.predict(preprocessed_image)
-        results = imagenet_utils.decode_predictions(predictions)
+        print(predictions)
+        
 
-        category_animals = []
-        category_percent = []
-        for s in results:
-            for f in s:
-                category_animals.add(f[1])
-                category_percent.add(f[2])
-        return category_animals, category_percent
+        predicted_class = predictions.argmax(axis=-1)
+        print(y_classes)
+
+        # TODO predictions should have its own intepretation tool, expercially hooked to the api
+        # Also need to properly define the domain space for the exit layer. This will vary for which model used
+
+        #results = imagenet_utils.decode_predictions(predictions, self.model)
+
+        # category_animals = []
+        # category_percent = []
+        # for s in results:
+        #     for f in s:
+        #         category_animals.add(f[1])
+        #         category_percent.add(f[2])
+        return predicted_class, predictions
+
+
+    # to do eventually
+    def create_own_model(self):
+        pass

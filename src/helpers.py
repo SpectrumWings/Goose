@@ -59,3 +59,24 @@ def batch_image_preprocessor(model, train_path, valid_path, test_path):
         valid_batches = ImageDataGenerator(preprocessing_function=tf.keras.applications.mobilenet.preprocess_input).flow_from_directory(directory=valid_path, target_size=(224, 224), batch_size=10)
         test_batches = ImageDataGenerator(preprocessing_function=tf.keras.applications.mobilenet.preprocess_input).flow_from_directory(directory=test_path, target_size=(224, 224), batch_size=10, shuffle = False)
     return train_batches, valid_batches, test_batches
+
+def image_file_setup(original_path, custom_sets):
+    # custom_sets is a list of str
+    os.chdir(original_path)
+    if os.path.isdir('train/' + custom_sets[0]) is False:
+        os.mkdir('train')
+        os.mkdir('valid')
+        os.mkdir('test')
+
+    for i in custom_sets:
+        shutil.move(f'{i}', 'train')
+        os.mkdir(f'valid/{i}')
+        os.mkdir(f'test/{i}')
+
+        valid_samples = random.sample(os.listdir(f'train/{i}'), 30)
+        for j in valid_samples:
+            shutil.move(f'train/{i}/{j}', f'valid/{i}')
+
+        test_samples = random.sample(os.listdir(f'train/{i}'), 5)
+        for k in test_samples:
+            shutil.move(f'train/{i}/{k}', f'test/{i}')

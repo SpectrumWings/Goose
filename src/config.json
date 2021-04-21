@@ -1,6 +1,12 @@
 {
-    "model_location": "mees",
-    "train_path": "",
-    "valid_path": "",
-    "test_path": ""
+    
+    "train_path": "./data/refine/train",
+    "valid_path": "./data/refine/valid",
+    "test_path": "./data/refine/test",
+    
+    "save_path": "./models/saved/",
+    "model_location": "./models/saved/",
+
+    "image_input_path": "./data/custom"
+    
 }

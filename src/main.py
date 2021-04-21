@@ -12,6 +12,8 @@ class main:
     def setup_system(self, config):
         loaded = False
         inputs = ""
+
+        # TODO add a default load setup for when running on server
         print("*****************************************************")
         inputs = input("Setup ---- What model to use?\n\nMOBILE = user mobilenet\nLOAD = load from file\n")
         while not loaded and inputs != 'q':
@@ -23,27 +25,52 @@ class main:
                     print(e)
             
             elif inputs == "LOAD":
-                print("Loading model from config")
+                
+                inputs = input("Enter model name:\n")
 
                 try:
-                    print(config['model_location'])
-                    self.model.load_model(config['model_location'])
+                    print("Loading model from config")
+                    print(config['model_location'] + inputs)
+                    self.model.load_model(config['model_location'] + inputs)
                     print("Load sucessful")
                     loaded = True
 
-                except :
-                    print("Unable to load model, please retry")
+                except Exception as e:
+                    print("e")
             if not loaded: inputs = input()
 
         while inputs != 'q':
             inputs = input("What to do?\n\na = train model \nb = test image\nc = start server\nd = save model\nq = quit\n")
 
+            # model training
             if inputs == 'a':
                 self.train_model(config)
+
+            # test model on image
             elif inputs == 'b':
-                pass
+                inputs = input("Enter test file path:\n")
+
+                try:
+                    result_animal, result_percents = self.model.determine_image(inputs)
+                    print(result_animal)
+                    print(result_percents)
+                except Exception as e:
+                    print(e)
+            
+            # start flask server
             elif inputs == 'c':
                 pass
+
+            # save model
+            elif inputs == 'd':
+                inputs = input("Save model name?\n")
+                print('Saving model to save location in config')
+                try:
+                    self.model.save_model(config['save_path']+inputs)
+                    print("Model save sucessful")
+                except:
+                    print("Error in saving model")
+                
 
 
     def read_json(self, file):
