@@ -8,12 +8,12 @@ import './App.css';
 function App() {
   const [selectedFile, setSelectedFile] = useState('')
 
+
   const fileSelectedHandler = event => {
     setSelectedFile(event)
   }
 
   const fileUploadHandler = (event) => {
-    
     console.log(selectedFile.target.files[0])
   }
 
@@ -22,6 +22,8 @@ function App() {
       <div>
         <input type="file" onChange={fileSelectedHandler}/>
         <button onClick={fileUploadHandler}>Upload</button>
+        
+        
       </div>
   );
 }
