@@ -5,25 +5,44 @@ import axios from 'axios'
 
 import './App.css';
 
-function App() {
-  const [selectedFile, setSelectedFile] = useState('')
-
-  const fileSelectedHandler = event => {
-    setSelectedFile(event)
-  }
-
-  const fileUploadHandler = (event) => {
-    
-    console.log(selectedFile.target.files[0])
-  }
-
+function Display(props) {
   return (
-    
-      <div>
-        <input type="file" onChange={fileSelectedHandler}/>
-        <button onClick={fileUploadHandler}>Upload</button>
-      </div>
+    <p>
+      Filename: {props.filename}
+    </p>
   );
+}
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fileInput = React.createRef();
+    this.state = {
+      filename: ""
+    };
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const filename = this.fileInput.current.files[0].name;
+    this.setState({filename: filename});
+    console.log(filename);
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input type="file" ref={this.fileInput}/>
+          <button type="submit">Upload</button>
+          <Display
+            filename={this.state.filename}
+          />
+        </form>
+      </div>
+    );
+  }
 }
 
 export default App;
