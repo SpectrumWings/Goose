@@ -35,9 +35,9 @@ class modelbase():
 
     def mobile_model_setup(self):
         self.model = tf.keras.applications.mobilenet.MobileNet()
-        x = self.model.layers[-model_end_slice].output
-        output = Dense(units=num_possible_results, activation='softmax')(x)
-        self.model = Model(inputs=self.model.input, outputs=output)
+        #x = self.model.layers[-model_end_slice].output
+        #output = Dense(units=num_possible_results, activation='softmax')(x)
+        #self.model = Model(inputs=self.model.input, outputs=output)
         self.name = "mobile"
     
     def lock_layers(self, num):
@@ -63,24 +63,24 @@ class modelbase():
         preprocessed_image = prepare_image(path)
         
         predictions = self.model.predict(preprocessed_image)
-        print(predictions)
+        results = imagenet_utils.decode_predictions(predictions)
+        #print(results)
         
 
-        predicted_class = predictions.argmax(axis=-1)
-        print(y_classes)
+        #predicted_class = predictions.argmax(axis=-1)
 
         # TODO predictions should have its own intepretation tool, expercially hooked to the api
         # Also need to properly define the domain space for the exit layer. This will vary for which model used
 
         #results = imagenet_utils.decode_predictions(predictions, self.model)
 
-        # category_animals = []
-        # category_percent = []
-        # for s in results:
-        #     for f in s:
-        #         category_animals.add(f[1])
-        #         category_percent.add(f[2])
-        return predicted_class, predictions
+        category_animals = []
+        category_percent = []
+        for s in results:
+            for f in s:
+                category_animals.append(f[1])
+                category_percent.append(f[2])
+        return category_animals, category_percent
 
 
     # to do eventually
