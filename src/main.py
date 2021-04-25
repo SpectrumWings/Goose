@@ -1,17 +1,20 @@
 import sys
 import json
 from models.modelbase import modelbase
+from server.server import server
 
 class main:
     def __init__(self):
         config = self.read_json('config.json')
         self.model = modelbase()
         self.setup_system(config)
+        self.server = None
        
     
     def setup_system(self, config):
         loaded = False
         inputs = ""
+        server_running = False
 
         # TODO add a default load setup for when running on server
         print("*****************************************************")
@@ -39,7 +42,7 @@ class main:
                     print("e")
             if not loaded: inputs = input()
 
-        while inputs != 'q':
+        while inputs != 'q' or not server_running:
             inputs = input("What to do?\n\na = train model \nb = test image\nc = start server\nd = save model\nq = quit\n")
 
             # model training
@@ -59,7 +62,12 @@ class main:
             
             # start flask server
             elif inputs == 'c':
-                pass
+                server_running = True
+                self.server = server()
+                self.server.initialize_api()
+                self.server.start_server()
+                
+                
 
             # save model
             elif inputs == 'd':
