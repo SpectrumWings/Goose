@@ -1,0 +1,23 @@
+@import url("//fonts.googleapis.com/css?family=Comfortaa" );
+
+.button_image {
+    background: url("../../images/button.png") no-repeat;
+    background-size:90%;
+    background-position: center;
+    border: transparent;
+    cursor:pointer;
+    margin:auto;
+    margin-top: -3vh;
+    
+    width: 200px;
+    height: 100px;
+    max-width: 20%;
+    max-height: 100%;
+
+    display: block;
+
+  
+    font-family: Comfortaa, sans-serif;
+    color: white;
+    font-size: 25px;
+  }

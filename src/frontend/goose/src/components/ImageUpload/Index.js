@@ -1,5 +1,6 @@
 import React from 'react'
 import './Style.css';
+import GreenButton from '../Buttons/GButton.js';
 
 function ImageUpload(props) {
 
@@ -10,21 +11,22 @@ function ImageUpload(props) {
                 
                 onChange={props.change} 
                 onSubmit={props.submission}
-            >
+            >   <div className='polaroid_wraper'>
                 <div className='input_wrapper'>
                     
                     <input className="browse" type="file" ref={props.fileInput}/>
                     <img className='preview' src={props.content}/>
                 </div>
-                <button className='button_image' type="submit">Upload
+                </div>
+                <GreenButton className='button_image' colour='../../images/button.png' text='Upload' type="submit"/>
                 
-                </button>
-                <p>
-                    Filename: {props.filename}
-                </p>
+                
                 
                 
             </form>
+            <p>
+                    Filename: {props.filename}
+                </p>
         </div>
         
     )
