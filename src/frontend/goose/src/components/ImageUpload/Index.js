@@ -21,7 +21,7 @@ function ImageUpload(props) {
                 </div>
                 <GreenButton className='button_image' colour='../../images/button.png' text='Upload' type="submit"/>
                 
-                <p>memes</p>
+                <p>{props.prediction}</p>
                 
                 
             </form>

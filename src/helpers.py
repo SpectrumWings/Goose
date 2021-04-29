@@ -46,8 +46,11 @@ def plotImages(images_arr: list):
     #plt.show(block=False)
     plt.savefig('test.png')
 
-def prepare_image(file):
-    img_path = './data/mobile/'
+def prepare_image(file, mode):
+    if mode == "b":
+        img_path = './data/mobile/'
+    else:
+        img_path = ''
     img = image.load_img(img_path + file, target_size=(224,224))
     img_array = image.img_to_array(img)
     img_array_expanded_dims = np.expand_dims(img_array, axis=0)

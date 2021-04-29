@@ -38,6 +38,9 @@ class modelbase():
         #x = self.model.layers[-model_end_slice].output
         #output = Dense(units=num_possible_results, activation='softmax')(x)
         #self.model = Model(inputs=self.model.input, outputs=output)
+        
+        
+        
         self.name = "mobile"
     
     def lock_layers(self, num):
@@ -60,7 +63,7 @@ class modelbase():
         
 
     def determine_image(self, path):
-        preprocessed_image = prepare_image(path)
+        preprocessed_image = prepare_image(path, 'a')
         
         predictions = self.model.predict(preprocessed_image)
         results = imagenet_utils.decode_predictions(predictions)

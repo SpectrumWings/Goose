@@ -63,7 +63,7 @@ class main:
         # start flask server
         elif inputs == 'c':
             server_running = True
-            self.server = server()
+            self.server = server(self.model)
             self.server.initialize_api()
             self.server.start_server()
             
