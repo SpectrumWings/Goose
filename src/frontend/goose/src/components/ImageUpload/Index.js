@@ -14,13 +14,14 @@ function ImageUpload(props) {
             >   <div className='polaroid_wraper'>
                 <div className='input_wrapper'>
                     
-                    <input className="browse" type="file" ref={props.fileInput}/>
+                    <input className="browse" type="file"/>
                     <img className='preview' src={props.content}/>
+               
                 </div>
                 </div>
                 <GreenButton className='button_image' colour='../../images/button.png' text='Upload' type="submit"/>
                 
-                
+                <p>memes</p>
                 
                 
             </form>

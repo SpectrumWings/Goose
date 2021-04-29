@@ -5,7 +5,7 @@ const GreenButton = (props) => {
     return (
         <div>
             <button
-                className='button_image'
+                className='button_green'
                 type={props.type}
             >
                 {props.text}

@@ -1,6 +1,6 @@
 @import url("//fonts.googleapis.com/css?family=Comfortaa" );
 
-.button_image {
+.button_green {
     background: url("../../images/button.png") no-repeat;
     background-size:90%;
     background-position: center;
@@ -20,4 +20,22 @@
     font-family: Comfortaa, sans-serif;
     color: white;
     font-size: 25px;
+  }
+
+  
+.button_cancel {
+    background: url("../../images/cancel.png") no-repeat;
+    background-size:90%;
+    background-position: center;
+    border: transparent;
+    cursor:pointer;
+    margin:auto;
+    margin-top: -3vh;
+    
+    width: 200px;
+    height: 100px;
+    max-width: 20%;
+    max-height: 100%;
+
+    display: block;
   }

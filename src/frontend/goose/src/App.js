@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import ImageUpload from './components/ImageUpload/Index'
-
+import ErrorMessage from './components/Messages/Error'
 import './App.css';
 
 class App extends React.Component {
@@ -14,6 +14,7 @@ class App extends React.Component {
     this.state = {
         filename: "",
         content: "",
+        error: "",
     };
   }
 
@@ -28,18 +29,19 @@ class App extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     
-    axios.post("/uploadImage", this.state.content, {
-      headers:{
-        'Content-Type': `imageFile.type`,
-      }
+    // axios.post("/uploadImage", this.state.content, {
+    //   headers:{
+    //     'Content-Type': `imageFile.type`,
+    //   }
 
-    })
-    .then((res) =>{
-
-    })
-    .catch((err) => {
-
-    })
+    // })
+    // .then((res) =>{
+    //   console.log(res)
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    //   this.setState({error: err})
+    // })
 
    
   }
@@ -47,7 +49,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-          <ImageUpload refs={this.fileInput} submission={this.handleSubmit} change={this.handleChange} filename={this.state.filename} content={this.state.content}/>
+        <ErrorMessage message={this.error}/>
+          <ImageUpload submission={this.handleSubmit} change={this.handleChange} filename={this.state.filename} content={this.state.content}/>
       </div>
     );
   }
