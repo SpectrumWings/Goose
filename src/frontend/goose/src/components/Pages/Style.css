@@ -1,0 +1,217 @@
+@import url("//fonts.googleapis.com/css?family=Comfortaa" );
+.title{
+    height: auto;
+    width: auto;
+    margin-top: -5vh;
+    margin-left: 1vw;
+    padding: 10px;
+    max-width: 20vw;
+    /* background:rgba(35,35,35,0.2);
+    border-radius: 10px; 
+    box-shadow: 0 0 5px white;*/
+
+}
+
+.background{
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
+    
+}
+
+.header_button{
+    float: right;
+    border: transparent;
+    font-family: Comfortaa, sans-serif;
+    color: #2f2f2f;
+    cursor:pointer;
+    padding: 2.5vh;
+    font-size: 20px;
+    box-shadow: 0 6px 0px -2px #3f3f3f;
+    margin-right: 20px;
+    bottom: 0;
+}
+
+header{
+    width: 100vw;
+    height: 50px;
+    padding-right: 10vw;
+    
+
+}
+
+.intro{
+    background: #dfdfdf;
+    height:100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+
+}
+
+.message{
+    
+    /* background: url("../../images/bmessage.png") no-repeat; 
+    background-size: 100% 100%;
+    background-position: center; */
+    background: transparent;
+    border-radius: 10px;
+
+    width: 40vw;
+    max-width: 35vw;
+    height: auto;
+    max-height: 15vh;
+    margin-left: 8vw;
+    padding: 100px;
+    color: #2f2f2f;
+
+
+
+    text-align: center;
+    
+    font-size: 40px;  
+   
+
+}
+
+.goose{
+     height: auto;
+
+     width: 400px;
+     margin-left: 0;
+     float: left;
+     position: absolute;
+     bottom: 0px;
+     animation: goosemove 1s;
+     animation-iteration-count: 1 ease;
+     animation-fill-mode:forwards;
+}
+
+
+.got{
+    font-family: Comfortaa, sans-serif;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    background: black;
+    border: transparent;
+    z-index: 2;
+ 
+    background: url("../../images/bbutton.png") no-repeat;
+    background-size:100% 100%;
+    background-position: center;
+    height: 100px;
+    width: 200px;
+    margin-right: 50px;
+    max-height: 100px;
+    align-items: center;
+    display: flex;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-bottom: 30px;
+}
+
+.g{
+    font-family: Comfortaa, sans-serif;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    background: black;
+    border: transparent;
+    z-index: 2;
+ 
+    background: url("../../images/button.png") no-repeat;
+    background-size:100% 100%;
+    background-position: center;
+    height: 100px;
+    width: 200px;
+    margin-right: 50px;
+    max-height: 100px;
+    align-items: center;
+    display: flex;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-bottom: 30px;
+}
+
+
+.no{
+    font-family: Comfortaa, sans-serif;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    background: black;
+    border: transparent;
+    z-index: 2;
+ 
+    background: url("../../images/rbutton.png") no-repeat;
+    background-size:100% 100%;
+    background-position: center;
+    height: 100px;
+    width: 200px;
+    margin-right: 50px;
+
+    align-items: center;
+    display: flex;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    padding-bottom: 30px;
+}
+
+.upload_option{
+    display: flex;
+    width: 100%;
+    margin-top: 5vh;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+.book{
+    background: url("../../images/book_closed.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    border-radius: 40px;
+}
+
+.book:hover {
+    background: url("../../images/bookmenu.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 250px;
+    height: 250px;
+
+    animation: shadows 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode:forwards;
+}
+
+
+
+@keyframes shadows {
+	0% {
+		box-shadow: 0 0 0 0 white;
+	}
+
+	100% {
+        box-shadow: 0 0 0  10px  black;
+	}
+} 
+
+@keyframes goosemove {
+	0% {
+		left:-500px;
+	}
+	100% {
+		left: 0;
+	}
+} 
+

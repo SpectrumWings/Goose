@@ -26,7 +26,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #279AF1;
 }
 
 @keyframes App-logo-spin {
@@ -42,3 +42,31 @@ body {
   font-family: Comfortaa, sans-serif;
 }
 
+.bg {
+	/* background: linear-gradient(180deg, rgb(31, 31, 31, 1), rgb(97, 97, 97, 0.3), rgb(39, 39, 39, 0.5) , rgb(51, 204, 102, 1) );
+	background-size: 400% 400%;
+  animation: gradient 10s ease; */
+
+
+  background: #efefef;
+  
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  animation-iteration-count: 1;
+  animation-fill-mode:forwards;
+
+
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 0%;
+	}
+	/* 50% {
+		background-position: 100% 100%;
+	} */
+	100% {
+		background-position: 100% 100%;
+	}
+} 

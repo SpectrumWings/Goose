@@ -2,7 +2,7 @@
 
 .button_green {
     background: url("../../images/button.png") no-repeat;
-    background-size:90%;
+    background-size:contain;
     background-position: center;
     border: transparent;
     cursor:pointer;
@@ -11,8 +11,7 @@
     
     width: 200px;
     height: 100px;
-    max-width: 20%;
-    max-height: 100%;
+
 
     display: block;
 

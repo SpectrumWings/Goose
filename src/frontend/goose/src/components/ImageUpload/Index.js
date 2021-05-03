@@ -7,18 +7,20 @@ function ImageUpload(props) {
     return (
         
         <div className='upload_form'>
+            <button className='cancel' onClick={props.close}/>
             <form
                 
                 onChange={props.change} 
-                onSubmit={props.submission}
-            >   <div className='polaroid_wraper'>
+                onSubmit={props.submission}>
+              
                 <div className='input_wrapper'>
                     
-                    <input className="browse" type="file"/>
-                    <img className='preview' src={props.content}/>
-               
+                  
+                        <input className="browse" type="file"/>
+                        <img className='preview' alt="" src={props.content}/>
+                    
                 </div>
-                </div>
+
                 <GreenButton className='button_image' colour='../../images/button.png' text='Upload' type="submit"/>
                 
                 <p>{props.prediction}</p>
