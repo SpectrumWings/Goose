@@ -1,0 +1,103 @@
+@import url("//fonts.googleapis.com/css?family=Comfortaa" );
+
+.log{
+    z-index: 5;
+    position: relative;
+    border-radius: 15px;
+    background: #cfcfcf;
+    padding: 15px;
+    width: 400px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.guestLog{
+    z-index: 5;
+    position: relative;
+    border-radius: 15px;
+    background: #cfcfcf;
+    padding: 15px;
+    width: 400px;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.regRow{
+    z-index: 5;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    width: 40vw;
+    
+}
+
+
+.logrow{
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.authForm{
+    font-family: co;
+    margin: 0px;
+    text-align: initial;
+    border-radius: 5px;
+    background: white;
+    color: black;
+    padding: 3px;
+    font-family: Comfortaa, sans-serif;
+}
+
+.guestForm{
+    margin: 0px;
+    text-align: initial;
+    border-radius: 5px;
+    background: white;
+    color: black;
+    padding: 3px;
+    width:90%;
+    font-family: Comfortaa, sans-serif;
+}
+
+.ent{
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+}
+
+.guest{
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+}
+
+
+
+.registerButton{
+    border: transparent;
+    padding: 7px;
+    border-radius: 5px;
+    background:#2f2f2f;
+    color:white;
+    width: 100px;
+    height: 100px;
+}
+
+.guestRow{
+
+    width: 100%;
+}
+

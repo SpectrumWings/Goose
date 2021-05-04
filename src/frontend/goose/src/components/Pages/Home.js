@@ -3,16 +3,20 @@ import './Style.css';
 import title from '../../images/title.png';
 import goose from '../../images/goose_head.png';
 import ImageUpload from '../../components/ImageUpload/Index'
-import gb from "../../images/bbutton.png";
+import Login from '../../components/Auth/Login'
 
 const MainPage = (props) => {
     let loginSet;
     let uploadSet;
     let uploadDisplay;
-    let pageSet;
     let messageBlock;
+    let loginPage;
 
-    if (props.convo_prog == 2){
+    if (props.convo_prog === 1){
+        loginPage = <Login login={props.login}/>
+    }
+
+    if (props.convo_prog === 2){
         loginSet = 
         <div className='upload_option'>
   
@@ -25,7 +29,7 @@ const MainPage = (props) => {
         </div>
     }
 
-    if (props.convo_prog == 3 && props.action == false){
+    if (props.convo_prog === 3 && props.action === false){
         uploadSet = 
         <div className='upload_option'>
             <div className = 'book' onClick={props.upload_form}>
@@ -34,7 +38,7 @@ const MainPage = (props) => {
         </div>
     }
     
-    if (props.action == true){
+    if (props.action === true){
         console.log(props.action)
         uploadDisplay = 
         <section>
@@ -50,11 +54,11 @@ const MainPage = (props) => {
         </section>
       }
 
-    if (props.action == false){
+    if (props.action === false){
         messageBlock = 
         <p>
             {props.message}
-            <div class="triangle-down"></div>
+            
         </p>
     }
 
@@ -75,7 +79,9 @@ const MainPage = (props) => {
                 
                 <div className="message" onClick={props.convo}>
                     {messageBlock}
+                    {loginPage}
                     {loginSet}
+                    
                     {uploadSet}
                 </div>
                 {/* <ErrorMessage message={this.error}/>

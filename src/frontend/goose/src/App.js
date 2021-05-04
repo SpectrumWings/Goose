@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from 'axios';
-import ImageUpload from './components/ImageUpload/Index'
-import ErrorMessage from './components/Messages/Error'
 import MainPage from './components/Pages/Home'
 
 import './App.css';
@@ -17,10 +15,16 @@ class App extends React.Component {
     this.closeUpload = this.closeUpload.bind(this);
     this.goToUpload = this.goToUpload.bind(this);
     this.noUpload = this.noUpload.bind(this);
+    this.login = this.login.bind(this);
     this.fileInput = React.createRef();
 
+ 
+    const status = {
+      NEW: 0,
+      LOGGED: 1,
+      GUEST: 2,
 
-
+    }
 
     this.state = {
         filename: "",
@@ -28,28 +32,41 @@ class App extends React.Component {
         error: "",
         cc: "",
         predition: "",
+
         home_convo: 0,
+
         open_book: false,
         image_set: false,
+
+        authenticated: status.NEW,
+        name: "",
+
     };
   }
+
+  login(e){
+
+    
+    console.log(e)
+  }
+
   updateConvo(e){
     e.preventDefault();
-    console.log(this.state.home_convo)
-    if ((this.state.image_set == true && this.state.home_convo == 3) || (this.state.home_convo < 3 && this.state.home_convo != 2)){
+ 
+    if ((this.state.authenticated === true && this.state.home_convo === 1) || (this.state.image_set === true && this.state.home_convo === 3) || (this.state.home_convo === 0)){
       this.setState({home_convo: this.state.home_convo + 1});
     }
   }
   
   openUpload(e){
     e.preventDefault();
-    console.log(this.state.open_book);
+    
     this.setState({open_book: true});
   }
 
   closeUpload(e){
     e.preventDefault();
-    console.log(this.state.open_book);
+
     this.setState({open_book: false});
   }
 
@@ -112,22 +129,21 @@ class App extends React.Component {
       <div className = 'bg'>
         <MainPage 
           prediction={this.state.prediction} 
-          submission={this.handleSubmit} 
-          change={this.handleChange} 
           filename={this.state.filename} 
           content={this.state.content} 
-          action={this.state.open_book} 
-          upload_form={this.openUpload} 
-          close_upload={this.closeUpload} 
+          action={this.state.open_book}
+          authenticated={this.state.authenticated}
           convo_prog={this.state.home_convo} 
           message={home_messages[this.state.home_convo]} 
+          submission={this.handleSubmit} 
+          change={this.handleChange} 
           convo={this.updateConvo}
           go_upload={this.goToUpload}
-          no_upload={this.noUpload}/>
-        {/* <ErrorMessage message={this.error}/>
-         <ImageUpload prediction={this.state.prediction} submission={this.handleSubmit} change={this.handleChange} filename={this.state.filename} content={this.state.content}/>
-
-         */}
+          no_upload={this.noUpload}
+          login={this.login}
+          upload_form={this.openUpload} 
+          close_upload={this.closeUpload} 
+          />
       </div>
     );
   }
