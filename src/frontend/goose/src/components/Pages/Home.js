@@ -13,7 +13,7 @@ const MainPage = (props) => {
     let loginPage;
 
     if (props.convo_prog === 1){
-        loginPage = <Login login={props.login}/>
+        loginPage = <Login login={props.login} guestLogin={props.guestLogin}/>
     }
 
     if (props.convo_prog === 2){
@@ -76,12 +76,10 @@ const MainPage = (props) => {
          
             <div className='intro'>
                 {uploadDisplay}
-                
+                {loginPage}
                 <div className="message" onClick={props.convo}>
                     {messageBlock}
-                    {loginPage}
                     {loginSet}
-                    
                     {uploadSet}
                 </div>
                 {/* <ErrorMessage message={this.error}/>

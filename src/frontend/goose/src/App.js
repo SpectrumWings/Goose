@@ -15,11 +15,11 @@ class App extends React.Component {
     this.closeUpload = this.closeUpload.bind(this);
     this.goToUpload = this.goToUpload.bind(this);
     this.noUpload = this.noUpload.bind(this);
-    this.login = this.login.bind(this);
+    this.guestLogin = this.guestLogin.bind(this);
     this.fileInput = React.createRef();
 
  
-    const status = {
+    this.status = {
       NEW: 0,
       LOGGED: 1,
       GUEST: 2,
@@ -38,21 +38,20 @@ class App extends React.Component {
         open_book: false,
         image_set: false,
 
-        authenticated: status.NEW,
+        authenticated: this.status.NEW,
         name: "",
 
     };
   }
 
-  login(e){
-
-    
-    console.log(e)
+  guestLogin(name){
+    console.log(name)
+    this.setState({name: name})
+    this.setState({authenticated: this.status.GUEST})
+    this.setState({home_convo:this.state.home_convo + 1})
   }
 
-  updateConvo(e){
-    e.preventDefault();
- 
+  updateConvo(){ 
     if ((this.state.authenticated === true && this.state.home_convo === 1) || (this.state.image_set === true && this.state.home_convo === 3) || (this.state.home_convo === 0)){
       this.setState({home_convo: this.state.home_convo + 1});
     }
@@ -119,7 +118,7 @@ class App extends React.Component {
     const home_messages = [
       "Heya! Welcome to Goose Home",
       "First, tell me who you are",
-      "So, seen any geese lately?",
+      "So "+this.state.name+", seen any geese lately?",
       "Let us see them",
       "Away we go",
       "Thats unfortunate, come see the animals though",
@@ -142,7 +141,8 @@ class App extends React.Component {
           no_upload={this.noUpload}
           login={this.login}
           upload_form={this.openUpload} 
-          close_upload={this.closeUpload} 
+          close_upload={this.closeUpload}
+          guestLogin={this.guestLogin}
           />
       </div>
     );
