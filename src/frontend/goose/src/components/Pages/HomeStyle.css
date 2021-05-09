@@ -13,10 +13,15 @@
 }
 
 .background{
-    width: 100%;
-    height: 100%;
-    max-width: 100vw;
-    max-height: 100vh;
+    
+
+  background: #efefef;
+  
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  animation-iteration-count: 1;
+  animation-fill-mode:forwards;
     
 }
 
@@ -26,6 +31,7 @@
     font-family: Comfortaa, sans-serif;
     color: #2f2f2f;
     cursor:pointer;
+    height: 50px;
     padding: 2.5vh;
     font-size: 20px;
     box-shadow: 0 6px 0px -2px #3f3f3f;
@@ -35,7 +41,7 @@
 
 header{
     width: 100vw;
-    height: 50px;
+    height: 55px;
     padding-right: 10vw;
     
 

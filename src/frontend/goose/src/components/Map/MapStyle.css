@@ -1,0 +1,41 @@
+.header_button{
+    float: right;
+    border: transparent;
+    
+    font-family: Comfortaa, sans-serif;
+    color: white;
+    cursor:pointer;
+
+    font-size: 20px;
+    box-shadow: 0 6px 0px -2px #3f3f3f;
+    margin-right: 20px;
+    height: 50px;
+    background:#329452;
+    bottom: 0;
+
+}
+
+header{
+    width: 100vw;
+    height: 55px;
+    padding-right: 10vw;
+    background: #329452;
+}
+
+.title{
+    height: 50px;
+    width: auto;
+    margin-top: -3px;
+    /* background:rgba(35,35,35,0.2);
+    border-radius: 10px; 
+    box-shadow: 0 0 5px white;*/
+
+}
+
+
+.map{
+    height: 100vh;
+    width: 100vw;
+    background: rgba(51,204,102, 0.7)
+  
+}

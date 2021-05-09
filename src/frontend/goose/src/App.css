@@ -43,20 +43,9 @@ body {
 }
 
 .bg {
-	/* background: linear-gradient(180deg, rgb(31, 31, 31, 1), rgb(97, 97, 97, 0.3), rgb(39, 39, 39, 0.5) , rgb(51, 204, 102, 1) );
-	background-size: 400% 400%;
-  animation: gradient 10s ease; */
-
-
-  background: #efefef;
-  
   width: 100vw;
   height: 100vh;
-  position: fixed;
-  animation-iteration-count: 1;
-  animation-fill-mode:forwards;
-
-
+  overflow: hidden;
 }
 
 @keyframes gradient {

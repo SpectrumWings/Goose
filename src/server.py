@@ -28,17 +28,29 @@ class server():
         def upload_image():
             print(request.files)
             file_img = request.files['file']
+            animal_name = request.form.get('animal')
+            print("***************")
+            print(animal_name)
             filename = secure_filename(file_img.filename)
          
             if filename != '':
                 file_img.save(os.path.join(self.upload_loc, filename))
 
-                # print('AAAAAAAAAAAAAAAAAAAAAAAAA')
-                # print(os.path.join(self.upload_loc, filename))
                 if self.model:
                     result_animal, result_percents = self.model.determine_image(os.path.join(self.upload_loc, filename))
-                    print(result_animal)
-                    print(result_percents)
-            return result_animal[0]
+                    result = self.check_animal(result_animal, result_percents)
+            
+                    if result in [0,1,2,3,4]:
+                        return jsonify(["true", result_animal[result]])
+                    else:
+                        return jsonify(["false", result_animal[0]])
 
 
+    def check_animal(self, animal_list, percent_list):
+        for idx, ani in enumerate(animal_list):
+            print(percent_list[idx])
+
+            if "cat" in ani or "tabby" in ani or "dog" in ani:
+                if percent_list[idx] > 0.6:
+                    return idx
+        return None

@@ -51,11 +51,16 @@ body {
     height: 800px;
     z-index: 2;
 
-    position: relative;
+
+    position: absolute;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+
+    animation: popup 1s;
+    animation-iteration-count: 0.5 ease;
+    animation-fill-mode:forwards;
 }
 
 .preview{
@@ -64,7 +69,7 @@ body {
 
   border-radius: 7%;
   text-align: initial;
-    padding-bottom: 190px;
+
   margin-top: -400px;
 
 }
@@ -81,4 +86,26 @@ body {
   height: 70px;
   border-radius: 45px;
   border: 8px solid #1f1f1f;
+}
+
+.formPart{
+  display: flex;
+  flex-direction: column;
+}
+
+.nameForm{
+  margin-top: -50px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid black;
+  width: 300px;
+}
+
+@keyframes popup {
+  0%{
+    transform: scale(0.5);
+  }
+  100%{
+    transform: scale(1);
+  }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import MainPage from './components/Pages/Home'
+import MapPage from './components/Map/Map'
 
 import './App.css';
 
@@ -16,6 +17,8 @@ class App extends React.Component {
     this.goToUpload = this.goToUpload.bind(this);
     this.noUpload = this.noUpload.bind(this);
     this.guestLogin = this.guestLogin.bind(this);
+    this.handleAnimalName = this.handleAnimalName.bind(this);
+    this.returnConvo = this.returnConvo.bind(this);
     this.fileInput = React.createRef();
 
  
@@ -27,13 +30,17 @@ class App extends React.Component {
     }
 
     this.state = {
+        page: 0,
+
         filename: "",
         content: "",
+        animal_name: "",
         error: "",
         cc: "",
         predition: "",
 
         home_convo: 0,
+        valid_animal: null,
 
         open_book: false,
         image_set: false,
@@ -41,8 +48,10 @@ class App extends React.Component {
         authenticated: this.status.NEW,
         name: "",
 
+
     };
   }
+
 
   guestLogin(name){
     console.log(name)
@@ -52,11 +61,26 @@ class App extends React.Component {
   }
 
   updateConvo(){ 
-    if ((this.state.authenticated === true && this.state.home_convo === 1) || (this.state.image_set === true && this.state.home_convo === 3) || (this.state.home_convo === 0)){
+    if ((this.state.authenticated === true && this.state.home_convo === 1) || 
+    (this.state.image_set === true && (this.state.home_convo === 3 )) || 
+    (this.state.home_convo === 0) ||
+    (this.state.home_convo === 4) || 
+    (this.state.home_convo === 6)
+    ){
       this.setState({home_convo: this.state.home_convo + 1});
+    }
+    if (this.state.home_convo === 5){
+      this.setState({page: 1})
+    }
+    if (this.state.home_convo === 7){
+      this.setState({page: 1})
     }
   }
   
+  returnConvo(){
+    this.setState({home_convo: this.state.home_convo - 1})
+  }
+
   openUpload(e){
     e.preventDefault();
     
@@ -76,12 +100,16 @@ class App extends React.Component {
 
   noUpload(e){
     e.preventDefault();
-    this.setState({home_convo: 5});
+    this.setState({home_convo: 6});
+  }
+
+  handleAnimalName(e){
+    e.preventDefault();
+    this.setState({animal_name: e.target.value})
   }
 
   handleChange(e) {
     e.preventDefault();
-    console.log("piss")
     const content = URL.createObjectURL(e.target.files[0]);
     const cc = e.target.files[0];
     const filename = e.target.files[0].name;
@@ -94,6 +122,7 @@ class App extends React.Component {
     e.preventDefault();
     const data = new FormData()
     data.append("file", this.state.cc)
+    data.append("animal", this.state.animal_name)
     axios({
       method: "post",
       url: "/uploadImage", 
@@ -102,7 +131,17 @@ class App extends React.Component {
     })
     .then((res) =>{
       console.log(res.data)
-      this.setState({prediction: res.data})
+      if (res.data[0] == "true"){
+        this.setState({prediction: res.data[1]})
+        this.setState({valid_animal: true})
+        this.setState({home_convo: this.state.home_convo + 1})
+        this.setState({open_book: false})
+      }
+      else{
+        this.setState({prediction: res.data[1]})
+        this.setState({valid_animal: false})
+      }
+      
     })
     .catch((err) => {
       console.log(err)
@@ -112,38 +151,58 @@ class App extends React.Component {
   }
 
 
-
-
   render() {
     const home_messages = [
       "Heya! Welcome to Goose Home",
       "First, tell me who you are",
       "So "+this.state.name+", seen any geese lately?",
       "Let us see them",
-      "Away we go",
+      "Nice photo",
+      "Lets set them up in our habitat. Away we go",
       "Thats unfortunate, come see the animals though",
     ];
 
-    return (
-      <div className = 'bg'>
-        <MainPage 
+    let homePage;
+    if (this.state.page === 0){
+      homePage = 
+      <MainPage 
           prediction={this.state.prediction} 
           filename={this.state.filename} 
           content={this.state.content} 
           action={this.state.open_book}
           authenticated={this.state.authenticated}
           convo_prog={this.state.home_convo} 
-          message={home_messages[this.state.home_convo]} 
+          message={home_messages[this.state.home_convo]}
+          validUpload = {this.state.valid_animal}
+          login={this.login}
           submission={this.handleSubmit} 
           change={this.handleChange} 
           convo={this.updateConvo}
           go_upload={this.goToUpload}
           no_upload={this.noUpload}
-          login={this.login}
+          return_convo={this.returnConvo}
           upload_form={this.openUpload} 
           close_upload={this.closeUpload}
           guestLogin={this.guestLogin}
+          animal_name={this.handleAnimalName}
           />
+    }
+    
+    let mpPage;
+    if (this.state.page === 1){
+      mpPage=
+      <MapPage
+        filename={this.state.filename}
+        content={this.state.content}
+
+      />
+    }
+  
+
+    return (
+      <div className = 'bg'>
+         {homePage}
+         {mpPage}
       </div>
     );
   }

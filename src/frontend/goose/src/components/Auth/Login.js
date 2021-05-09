@@ -25,8 +25,6 @@ class Login extends React.Component {
     handleLogin(e){
         e.preventDefault();
         
-        
-        
         axios({
             method: "post",
             url: "/login", 

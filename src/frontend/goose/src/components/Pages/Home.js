@@ -1,5 +1,5 @@
 import React from 'react'
-import './Style.css';
+import './HomeStyle.css';
 import title from '../../images/title.png';
 import goose from '../../images/goose_head.png';
 import ImageUpload from '../../components/ImageUpload/Index'
@@ -11,6 +11,8 @@ const MainPage = (props) => {
     let uploadDisplay;
     let messageBlock;
     let loginPage;
+    let reback;
+    let nameField;
 
     if (props.convo_prog === 1){
         loginPage = <Login login={props.login} guestLogin={props.guestLogin}/>
@@ -37,19 +39,31 @@ const MainPage = (props) => {
             
         </div>
     }
+
+
+    if (props.convo_prog === 4 || props.convo_prog === 5){
+        reback = 
+        <div className='upload_option'>
+  
+            <div className='got' onClick={props.return_convo}>Wait, let take me back</div>
+            
+        </div>
+    }
+
     
     if (props.action === true){
-        console.log(props.action)
         uploadDisplay = 
         <section>
 
         <ImageUpload 
+            animal_name={props.animal_name}
             close={props.close_upload} 
             prediction={props.prediction}
             submission={props.submission} 
             change={props.change} 
             filename={props.filename} 
             content={props.content}
+            validUpload={props.validUpload}
             />
         </section>
       }
@@ -71,16 +85,19 @@ const MainPage = (props) => {
                 <button className='header_button'>
                     Login
                 </button>
+                <img src={title} alt="Goose Home" className="title"/>
             </header>
-            <img src={title} alt="Goose Home" className="title"/>
+  
          
             <div className='intro'>
                 {uploadDisplay}
                 {loginPage}
                 <div className="message" onClick={props.convo}>
                     {messageBlock}
+                    {reback}
                     {loginSet}
                     {uploadSet}
+     
                 </div>
                 {/* <ErrorMessage message={this.error}/>
         */}
