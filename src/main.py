@@ -1,6 +1,7 @@
 import sys
 import json
 from models.modelbase import modelbase
+import database
 from server import server
 
 class main:
@@ -9,12 +10,17 @@ class main:
         self.model = modelbase()
         self.setup_system(config)
         self.server = None
+        self.database = None
+        
        
     
     def setup_system(self, config):
         loaded = False
         inputs = ""
         server_running = False
+        self.database = database.database()
+        self.database.intialize()
+        print(self.database)
 
         # TODO add a default load setup for when running on server
         print("*****************************************************")
@@ -63,7 +69,7 @@ class main:
         # start flask server
         elif inputs == 'c':
             server_running = True
-            self.server = server(self.model)
+            self.server = server(self.model, self.database)
             self.server.initialize_api()
             self.server.start_server()
             

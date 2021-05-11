@@ -12,10 +12,9 @@ const MainPage = (props) => {
     let messageBlock;
     let loginPage;
     let reback;
-    let nameField;
 
     if (props.convo_prog === 1){
-        loginPage = <Login login={props.login} guestLogin={props.guestLogin}/>
+        loginPage = <Login setTokenLogin={props.setTokenLogin} login={props.login} guestLogin={props.guestLogin}/>
     }
 
     if (props.convo_prog === 2){

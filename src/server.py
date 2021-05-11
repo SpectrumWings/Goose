@@ -2,17 +2,20 @@ import flask
 import os
 
 from flask import *
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 class server():
     app = None
     model = None
-    def __init__(self, model_import):
+    def __init__(self, model_import, database):
         print("memes")
         self.app = Flask(__name__, static_folder='frontend\\goose\\build\\static', template_folder='frontend\\goose\\build')
+        self.cors = CORS(self.app)
         self.upload_loc = './server'
         self.extensions = set(['png', 'jpg', 'jpeg'])
         self.model = model_import
+        self.database = database
 
    
     def start_server(self):
@@ -26,11 +29,8 @@ class server():
 
         @self.app.route("/uploadImage", methods=['POST'])
         def upload_image():
-            print(request.files)
             file_img = request.files['file']
             animal_name = request.form.get('animal')
-            print("***************")
-            print(animal_name)
             filename = secure_filename(file_img.filename)
          
             if filename != '':
@@ -45,6 +45,33 @@ class server():
                     else:
                         return jsonify(["false", result_animal[0]])
 
+        @self.app.route("/register", methods=['POST'])
+        def registration():
+            result = request.get_json()
+            print(result['email'])
+            token = self.database.insertUser(result['email'], result['name'], result['password'])
+            if token:
+                res = make_response(jsonify(["true", token, result['name']]))
+                res.set_cookie('Goose Session', token, max_age=3600, secure=True)
+                return res
+            else:
+                res = make_response(jsonify(["false"]))
+                return res
+
+        @self.app.route("/login", methods=['POST'])
+        def login():
+            result = request.get_json()
+            token = self.database.checkLogin(result['email'], result['password'])
+
+            if token:
+                user = self.database.findUser(result['email'])
+                name = user["name"]
+                res = make_response(jsonify(["true", token, name]))
+                res.set_cookie('Goose Session', token, max_age=3600, secure=True)
+                return res
+            else:
+                res = make_response(jsonify(["false"]))
+                return res
 
     def check_animal(self, animal_list, percent_list):
         for idx, ani in enumerate(animal_list):

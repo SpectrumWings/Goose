@@ -16,7 +16,7 @@ const MapPage = (props) => {
 
 
     let newAnimal;
-    if (props.filename === "" && dOpen === true){
+    if (props.filename !== "" && dOpen === true){
         let animal = {content: props.content, animal: "goose", x: (window.screen.width/2), y: (window.screen.height/2 + window.screen.height/8),};
 
         newAnimal = 
@@ -27,7 +27,7 @@ const MapPage = (props) => {
     }
 
     let generalIntro;
-    if (props.filename !== "" && dOpen === true){
+    if (props.filename === "" && dOpen === true){
         generalIntro = 
         <Dial 
         closeDia={closeDialogue}

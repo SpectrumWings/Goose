@@ -6,7 +6,7 @@
     border-radius: 15px;
     background: #cfcfcf;
     padding: 15px;
-    width: 400px;
+    width: 600px;
     margin-left: 40px;
     margin-right: 40px;
 }
@@ -36,8 +36,9 @@
     flex-direction: row;
     justify-content: space-between;
     position: relative;
-    width: 40vw;
+    width: 800px;
     
+
 }
 
 
@@ -99,3 +100,7 @@
     width: 100%;
 }
 
+.error{
+    color: tomato;
+    margin-bottom: 10px;
+}

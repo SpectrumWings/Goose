@@ -3,14 +3,14 @@
     border: transparent;
     
     font-family: Comfortaa, sans-serif;
-    color: white;
+    color: #2f2f2f;
     cursor:pointer;
 
     font-size: 20px;
     box-shadow: 0 6px 0px -2px #3f3f3f;
-    margin-right: 20px;
+    
     height: 50px;
-    background:#329452;
+    background:#efefef;
     bottom: 0;
 
 }
@@ -19,7 +19,7 @@ header{
     width: 100vw;
     height: 55px;
     padding-right: 10vw;
-    background: #329452;
+    background:#efefef;
 }
 
 .title{

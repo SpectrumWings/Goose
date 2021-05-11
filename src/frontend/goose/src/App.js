@@ -19,8 +19,10 @@ class App extends React.Component {
     this.guestLogin = this.guestLogin.bind(this);
     this.handleAnimalName = this.handleAnimalName.bind(this);
     this.returnConvo = this.returnConvo.bind(this);
-    this.fileInput = React.createRef();
+    this.setTokenLogin = this.setTokenLogin.bind(this)
 
+    this.fileInput = React.createRef();
+ 
  
     this.status = {
       NEW: 0,
@@ -34,17 +36,18 @@ class App extends React.Component {
 
         filename: "",
         content: "",
-        animal_name: "",
+        animalName: "",
         error: "",
         cc: "",
         predition: "",
 
-        home_convo: 0,
-        valid_animal: null,
+        homeConvo: 0,
+        validAnimal: null,
 
-        open_book: false,
-        image_set: false,
+        openBook: false,
+        imageSet: false,
 
+        token: "",
         authenticated: this.status.NEW,
         name: "",
 
@@ -52,60 +55,67 @@ class App extends React.Component {
     };
   }
 
+  setTokenLogin(token, name){
+    this.setState({token: token})
+    this.setState({name: name})
+    this.setState({authenticated: this.status.LOGGED})
+    this.updateConvo()
+  }
+  
 
   guestLogin(name){
     console.log(name)
     this.setState({name: name})
     this.setState({authenticated: this.status.GUEST})
-    this.setState({home_convo:this.state.home_convo + 1})
+    this.setState({homeConvo:this.state.homeConvo + 1})
   }
 
   updateConvo(){ 
-    if ((this.state.authenticated === true && this.state.home_convo === 1) || 
-    (this.state.image_set === true && (this.state.home_convo === 3 )) || 
-    (this.state.home_convo === 0) ||
-    (this.state.home_convo === 4) || 
-    (this.state.home_convo === 6)
+    if (((this.state.authenticated === this.status.LOGGED || this.state.authenticated === this.status.GUEST) && this.state.homeConvo === 1) || 
+    (this.state.imageSet === true && (this.state.homeConvo === 3 )) || 
+    (this.state.homeConvo === 0) ||
+    (this.state.homeConvo === 4) || 
+    (this.state.homeConvo === 6)
     ){
-      this.setState({home_convo: this.state.home_convo + 1});
+      this.setState({homeConvo: this.state.homeConvo + 1});
     }
-    if (this.state.home_convo === 5){
+    if (this.state.homeConvo === 5){
       this.setState({page: 1})
     }
-    if (this.state.home_convo === 7){
+    if (this.state.homeConvo === 6){
       this.setState({page: 1})
     }
   }
   
   returnConvo(){
-    this.setState({home_convo: this.state.home_convo - 1})
+    this.setState({homeConvo: this.state.homeConvo - 1})
   }
 
   openUpload(e){
     e.preventDefault();
     
-    this.setState({open_book: true});
+    this.setState({openBook: true});
   }
 
   closeUpload(e){
     e.preventDefault();
 
-    this.setState({open_book: false});
+    this.setState({openBook: false});
   }
 
   goToUpload(e){
     e.preventDefault();
-    this.setState({home_convo: 3});
+    this.setState({homeConvo: 3});
   }
 
   noUpload(e){
     e.preventDefault();
-    this.setState({home_convo: 6});
+    this.setState({homeConvo: 6});
   }
 
   handleAnimalName(e){
     e.preventDefault();
-    this.setState({animal_name: e.target.value})
+    this.setState({animalName: e.target.value})
   }
 
   handleChange(e) {
@@ -122,7 +132,7 @@ class App extends React.Component {
     e.preventDefault();
     const data = new FormData()
     data.append("file", this.state.cc)
-    data.append("animal", this.state.animal_name)
+    data.append("animal", this.state.animalName)
     axios({
       method: "post",
       url: "/uploadImage", 
@@ -131,15 +141,15 @@ class App extends React.Component {
     })
     .then((res) =>{
       console.log(res.data)
-      if (res.data[0] == "true"){
+      if (res.data[0] === "true"){
         this.setState({prediction: res.data[1]})
-        this.setState({valid_animal: true})
-        this.setState({home_convo: this.state.home_convo + 1})
-        this.setState({open_book: false})
+        this.setState({validAnimal: true})
+        this.setState({homeConvo: this.state.homeConvo + 1})
+        this.setState({openBook: false})
       }
       else{
         this.setState({prediction: res.data[1]})
-        this.setState({valid_animal: false})
+        this.setState({validAnimal: false})
       }
       
     })
@@ -169,11 +179,11 @@ class App extends React.Component {
           prediction={this.state.prediction} 
           filename={this.state.filename} 
           content={this.state.content} 
-          action={this.state.open_book}
+          action={this.state.openBook}
           authenticated={this.state.authenticated}
-          convo_prog={this.state.home_convo} 
-          message={home_messages[this.state.home_convo]}
-          validUpload = {this.state.valid_animal}
+          convo_prog={this.state.homeConvo} 
+          message={home_messages[this.state.homeConvo]}
+          validUpload = {this.state.validAnimal}
           login={this.login}
           submission={this.handleSubmit} 
           change={this.handleChange} 
@@ -184,7 +194,8 @@ class App extends React.Component {
           upload_form={this.openUpload} 
           close_upload={this.closeUpload}
           guestLogin={this.guestLogin}
-          animal_name={this.handleAnimalName}
+          animalName={this.handleAnimalName}
+          setTokenLogin={this.setTokenLogin}
           />
     }
     

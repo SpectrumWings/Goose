@@ -25,33 +25,20 @@
     
 }
 
-.header_button{
-    float: right;
-    border: transparent;
-    font-family: Comfortaa, sans-serif;
-    color: #2f2f2f;
-    cursor:pointer;
-    height: 50px;
-    padding: 2.5vh;
-    font-size: 20px;
-    box-shadow: 0 6px 0px -2px #3f3f3f;
-    margin-right: 20px;
-    bottom: 0;
-}
 
 header{
     width: 100vw;
     height: 55px;
-    padding-right: 10vw;
+    padding-right: 15px;
     
-
+  
 }
 
 .intro{
     background: #dfdfdf;
     height:100%;
     width: 100%;
-
+    padding-top: 200px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -67,19 +54,20 @@ header{
     background-position: center; */
     background: transparent;
     border-radius: 10px;
-
     width: 40vw;
     max-width: 35vw;
     height: auto;
     max-height: 15vh;
-    margin-left: 8vw;
+    margin: auto;
+    margin-top:0px;
    
     color: #2f2f2f;
 
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     text-align: center;
-    
     font-size: 40px;  
    
 
@@ -89,6 +77,7 @@ header{
      height: auto;
 
      width: 400px;
+     max-width: 30vw;
      margin-left: 0;
      float: left;
      position: absolute;
