@@ -9,7 +9,7 @@ class server():
     app = None
     model = None
     def __init__(self, model_import, database):
-        self.app = Flask(__name__, static_folder='frontend\\goose\\build\\static', template_folder='frontend\\goose\\build')
+        self.app = Flask(__name__, static_folder='frontend/goose/build/static', template_folder='frontend/goose/build')
         self.cors = CORS(self.app)
         self.upload_loc = './server'
         self.extensions = set(['png', 'jpg', 'jpeg'])
