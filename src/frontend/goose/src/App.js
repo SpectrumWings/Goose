@@ -24,6 +24,9 @@ class App extends React.Component {
     this.setTokenLogin = this.setTokenLogin.bind(this)
     this.checkLoggedin = this.checkLoggedin.bind(this)
     this.continueLogin = this.continueLogin.bind(this)
+    this.userDropdown = this.userDropdown.bind(this)
+    this.logout = this.logout.bind(this)
+    this.purgeState = this.purgeState.bind(this)
     this.fileInput = React.createRef();
 
     this.cookies = new Cookies();
@@ -38,6 +41,7 @@ class App extends React.Component {
         error: "",
         cc: "",
         predition: "",
+        dropdown: false,
 
         homeConvo: 0,
         validAnimal: null,
@@ -51,6 +55,37 @@ class App extends React.Component {
 
 
     };
+  }
+
+  logout(){
+    this.purgeState()
+    if (this.state.homeConvo !== 1){
+      this.setState({homeConvo: 0})
+      
+    }
+    
+
+  }
+
+  purgeState(){
+    this.setState({authenticated: false});
+    this.setState({name: ""});
+    this.setState({filename: ""});
+    this.setState({content: ""});
+    this.setState({animalName: ""});
+    this.setState({error: ""});
+    this.setState({cc: ""});
+    this.setState({predition: ""});
+    this.setState({error: ""});
+    this.setState({dropdown: false});
+    this.setState({validAnimal: null});
+    this.setState({openbook: false});
+    this.setState({imageSet: false});
+    this.setState({token: ""});
+  }
+
+  userDropdown(){
+    this.setState({dropdown: !this.state.dropdown})
   }
 
   checkLoggedin(){
@@ -95,10 +130,11 @@ class App extends React.Component {
   }
 
   updateConvo(){ 
-    // if (this.state.authenticated === true && this.state.homeConvo == 0){
-    //   this.setState({homeConvo: 2});
-    // }
-    if (((this.state.authenticated === true) && this.state.homeConvo === 1) || 
+    if (this.state.authenticated === true && this.state.homeConvo == 0){
+      console.log("peewee")
+      this.setState({homeConvo: 2});
+    }
+    else if (((this.state.authenticated === true) && this.state.homeConvo === 1) || 
     (this.state.imageSet === true && (this.state.homeConvo === 3 )) || 
     (this.state.homeConvo === 0) ||
     (this.state.homeConvo === 4) || 
@@ -106,10 +142,10 @@ class App extends React.Component {
     ){
       this.setState({homeConvo: this.state.homeConvo + 1});
     }
-    if (this.state.homeConvo === 5){
+    else if (this.state.homeConvo === 5){
       this.setState({page: 1})
     }
-    if (this.state.homeConvo === 6){
+    else if (this.state.homeConvo === 6){
       this.setState({page: 1})
     }
   }
@@ -245,6 +281,16 @@ class App extends React.Component {
     }
 
     let headerDisplay;
+    let userDropdown;
+    
+    if (this.state.dropdown){
+        userDropdown = 
+        <div className="userSelection">
+              <button className="userOptions"> My Account</button>
+              <button className="userOptions"> Logout</button>
+          </div>
+    }
+    
     if (!this.state.authenticated){
         headerDisplay =
         <header>
@@ -261,21 +307,19 @@ class App extends React.Component {
         headerDisplay = 
         <header>
             <img src={title} alt="Goose Home" className="title"/>
-            <button className="headerUser">{this.state.name}</button>
-            <div className="userSelection">
-                <button className="userOptions"> My Account</button>
-                <button className="userOptions"> Logout</button>
-            </div>
+            <button onClick={this.userDropdown} className="headerUser">{this.state.name}</button>
+            
         </header>
     }
-  
 
     return (
       <div className = 'bg' onLoad={this.checkLoggedin}>
          {headerDisplay}
+         {userDropdown}
          {homePage}
          {mpPage}
       </div>
+      
     );
   }
 }

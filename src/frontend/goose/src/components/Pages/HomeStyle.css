@@ -67,7 +67,7 @@ header{
      height: auto;
 
      width: 500px;
-     max-width: 30vw;
+     max-width: 40vw;
      margin-left: 0;
      float: left;
      position: absolute;
@@ -132,7 +132,6 @@ header{
     background: black;
     border: transparent;
     z-index: 2;
- 
     background: url("../../images/rbutton.png") no-repeat;
     background-size:100% 100%;
     background-position: center;

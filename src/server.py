@@ -9,7 +9,6 @@ class server():
     app = None
     model = None
     def __init__(self, model_import, database):
-        print("memes")
         self.app = Flask(__name__, static_folder='frontend\\goose\\build\\static', template_folder='frontend\\goose\\build')
         self.cors = CORS(self.app)
         self.upload_loc = './server'
@@ -50,6 +49,8 @@ class server():
             result = request.get_json()
             print(result['email'])
             token = self.database.insertUser(result['email'], result['name'], result['password'])
+            if token == "dupe":
+                return make_response(jsonify(["dupe"]))
             if token:
                 res = make_response(jsonify(["true", token, result['name']]))
                 res.set_cookie('Goose Session', token, max_age=3600, secure=True)
@@ -64,7 +65,7 @@ class server():
             token = self.database.checkLogin(result['email'], result['password'])
 
             if token:
-                user = self.database.findUser(result['email'])
+                user = self.database.findUser("email", result['email'])
                 name = user["name"]
                 res = make_response(jsonify(["true", token, name]))
                 res.set_cookie('Goose Session', token, max_age=3600, secure=True)
@@ -72,6 +73,22 @@ class server():
             else:
                 res = make_response(jsonify(["false"]))
                 return res
+
+        @self.app.route("/checkCookie", methods=['POST'])
+        def checkCookie():
+            result = request.get_json()
+            if (len(result) > 0):
+                token = result['token']
+                found = self.database.checkToken(token)
+                if found:
+                    user = self.database.findUser("session_id", token)
+                    if user == None:
+                        return "false"
+                    return jsonify(["true", user["name"], token])
+                else:
+                    return "false"
+            return "false"
+
 
     def check_animal(self, animal_list, percent_list):
         for idx, ani in enumerate(animal_list):

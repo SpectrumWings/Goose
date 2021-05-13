@@ -32,16 +32,18 @@ class database():
             self.user_table.update_one({"email": email}, {"$set": {"session_id": token}}, upsert=False)
             self.user_table.update_one({"email": email}, {"$set": {"expiry": expiry}}, upsert=False)
             return token
+        except pymongo.errors.DuplicateKeyError:
+            return "dupe"
         except Exception as e:
             print(e)
             return None
 
-    def findUser(self, email):
-        query = {"email": email}
+    def findUser(self, value, email):
+        query = {value: email}
         return self.user_table.find_one(query)
 
     def checkLogin(self, email, password):
-        res = self.findUser(email)
+        res = self.findUser("email", email)
         print(res)
         if (res == None):
             return None
@@ -59,4 +61,16 @@ class database():
     def read_json(self, file):
         f = open(file, 'r').read()
         return json.loads(f)
-    #def sanitize(self, value):
+   
+    def checkToken(self, token):
+        res = self.findUser("session_id", token)
+        if (res == None):
+         
+            return False
+        expiry = res["expiry"]
+        now = datetime.now()
+        if expiry < now:
+            return False
+        else:
+            return True
+    

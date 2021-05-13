@@ -13,7 +13,6 @@ class main:
         self.database = None
         
        
-    
     def setup_system(self, config):
         loaded = False
         inputs = ""
@@ -24,7 +23,7 @@ class main:
 
         # TODO add a default load setup for when running on server
         print("*****************************************************")
-        inputs = input("Setup ---- What model to use?\n\m = user mobilenet\nl = load from file\n")
+        inputs = input("Setup ---- What model to use?\nm = user mobilenet\nl = load from file\n")
         #while not loaded and inputs != 'q':
         if inputs == "m":
             try:
