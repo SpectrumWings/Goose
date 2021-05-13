@@ -41,7 +41,9 @@ class App extends React.Component {
         error: "",
         cc: "",
         predition: "",
+
         dropdown: false,
+        confirmLogout: false,
 
         homeConvo: 0,
         validAnimal: null,
@@ -52,19 +54,21 @@ class App extends React.Component {
         token: "",
         authenticated: false,
         name: "",
-
-
     };
   }
 
   logout(){
-    this.purgeState()
-    if (this.state.homeConvo !== 1){
-      this.setState({homeConvo: 0})
-      
+    if (!this.state.confirmLogout){
+      this.setState({confirmLogout: true})
     }
-    
-
+    else if (this.state.confirmLogout){
+      this.purgeState()
+      if (this.state.homeConvo !== 1){
+        this.setState({homeConvo: 0});
+      }
+      this.setState({page: 0});
+      this.cookies.remove("Goose Session", {path: "/"});
+    }
   }
 
   purgeState(){
@@ -81,15 +85,17 @@ class App extends React.Component {
     this.setState({validAnimal: null});
     this.setState({openbook: false});
     this.setState({imageSet: false});
+    this.setState({confirmLogout: false});
     this.setState({token: ""});
   }
 
   userDropdown(){
-    this.setState({dropdown: !this.state.dropdown})
+    this.setState({dropdown: !this.state.dropdown});
+    this.setState({confirmLogout: false})
   }
 
   checkLoggedin(){
-    let token = this.cookies.get("Goose Session")
+    let token = this.cookies.get("Goose Session");
     axios({
       method: "post",
       url: "/checkCookie",
@@ -110,8 +116,6 @@ class App extends React.Component {
       console.log(err)
       this.setState({error: err})
     })
-   
-    
   }
 
   setTokenLogin(token, name){
@@ -287,7 +291,7 @@ class App extends React.Component {
         userDropdown = 
         <div className="userSelection">
               <button className="userOptions"> My Account</button>
-              <button className="userOptions"> Logout</button>
+              <button onClick={this.logout} className="userOptions"> {this.state.confirmLogout ? "Are you sure?": "Logout"}</button>
           </div>
     }
     

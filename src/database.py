@@ -26,8 +26,6 @@ class database():
             user = {"email": email, "name": name, "password": salted_pass, "session_id": "", "expiry": None}
             result = self.user_table.insert_one(user)
             token = jwt.encode({"user": email}, self.config["key"], algorithm="HS256")
-            
-            
             expiry = datetime.now() + timedelta(hours=1)
             self.user_table.update_one({"email": email}, {"$set": {"session_id": token}}, upsert=False)
             self.user_table.update_one({"email": email}, {"$set": {"expiry": expiry}}, upsert=False)
