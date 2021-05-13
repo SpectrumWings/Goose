@@ -1,6 +1,5 @@
 import React from 'react'
 import './HomeStyle.css';
-import title from '../../images/title.png';
 import goose from '../../images/goose_head.png';
 import ImageUpload from '../../components/ImageUpload/Index'
 import Login from '../../components/Auth/Login'
@@ -14,7 +13,7 @@ const MainPage = (props) => {
     let reback;
 
     if (props.convo_prog === 1){
-        loginPage = <Login setTokenLogin={props.setTokenLogin} login={props.login} guestLogin={props.guestLogin}/>
+        loginPage = <Login continueLogin={props.continueLogin} name={props.name} authenticated={props.authenticated} setTokenLogin={props.setTokenLogin} login={props.login} guestLogin={props.guestLogin}/>
     }
 
     if (props.convo_prog === 2){
@@ -75,19 +74,10 @@ const MainPage = (props) => {
         </p>
     }
 
+
+
     return (
         <div className='background'>
-            <header>
-                <button className='header_button'>
-                    About
-                </button>
-                <button className='header_button'>
-                    Login
-                </button>
-                <img src={title} alt="Goose Home" className="title"/>
-            </header>
-  
-         
             <div className='intro'>
                 {uploadDisplay}
                 {loginPage}
@@ -96,13 +86,9 @@ const MainPage = (props) => {
                     {reback}
                     {loginSet}
                     {uploadSet}
-     
                 </div>
-                {/* <ErrorMessage message={this.error}/>
-        */}
-       
+                {/* <ErrorMessage message={this.error}/>*/}
             </div>
-            
             <img src={goose} alt="Goose" className="goose"/>
         </div>
     )

@@ -37,17 +37,7 @@ const MapPage = (props) => {
 
 
     return (
-        <div className="map_background">
-            <header>
-                <button className='header_button'>
-                    About
-                </button>
-                <button className='header_button'>
-                    Filler
-                </button>
-                <img src={title} alt="Goose Home" className="title"/>
-            </header>
-            
+        <div className="map_background">       
             <div className="map">
                 {newAnimal}
                 {generalIntro}

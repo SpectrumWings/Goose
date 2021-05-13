@@ -1,16 +1,4 @@
 @import url("//fonts.googleapis.com/css?family=Comfortaa" );
-.title{
-    height: auto;
-    width: auto;
-    margin-top: -5vh;
-    margin-left: 1vw;
-    padding: 10px;
-    max-width: 20vw;
-    /* background:rgba(35,35,35,0.2);
-    border-radius: 10px; 
-    box-shadow: 0 0 5px white;*/
-
-}
 
 .background{
     
@@ -30,6 +18,8 @@ header{
     width: 100vw;
     height: 55px;
     padding-right: 15px;
+    display: flex;
+    flex-direction: row;
     
   
 }
@@ -76,7 +66,7 @@ header{
 .goose{
      height: auto;
 
-     width: 400px;
+     width: 500px;
      max-width: 30vw;
      margin-left: 0;
      float: left;
@@ -101,14 +91,13 @@ header{
     background-size:100% 100%;
     background-position: center;
     height: 100px;
-    width: 200px;
+    width: 300px;
     margin-right: 50px;
     max-height: 100px;
     align-items: center;
     display: flex;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 30px;
+    padding:40px;
+    text-align: center;
 }
 
 .g{
@@ -124,14 +113,14 @@ header{
     background-size:100% 100%;
     background-position: center;
     height: 100px;
-    width: 200px;
+    width: 300px;
+    
     margin-right: 50px;
-    max-height: 100px;
+    
+    text-align: center;
     align-items: center;
     display: flex;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 30px;
+    padding:40px;
 }
 
 
@@ -148,14 +137,13 @@ header{
     background-size:100% 100%;
     background-position: center;
     height: 100px;
-    width: 200px;
+    width: 300px;
     margin-right: 50px;
 
+    text-align: center;
     align-items: center;
     display: flex;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    padding-bottom: 30px;
+    padding:40px;
 }
 
 .upload_option{

@@ -104,3 +104,15 @@
     color: tomato;
     margin-bottom: 10px;
 }
+
+.logged{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 400px;
+    text-align: center;
+    background: #cfcfcf;
+    border-radius: 15px;
+    max-width: 20vw;
+    padding: 20px;
+}

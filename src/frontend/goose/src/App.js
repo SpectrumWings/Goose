@@ -1,9 +1,11 @@
 import React from "react";
 import axios from 'axios';
-import MainPage from './components/Pages/Home'
-import MapPage from './components/Map/Map'
-
+import MainPage from './components/Pages/Home';
+import MapPage from './components/Map/Map';
+import Cookies from 'universal-cookie';
 import './App.css';
+
+import title from './images/title.png';
 
 
 class App extends React.Component {
@@ -20,16 +22,12 @@ class App extends React.Component {
     this.handleAnimalName = this.handleAnimalName.bind(this);
     this.returnConvo = this.returnConvo.bind(this);
     this.setTokenLogin = this.setTokenLogin.bind(this)
-
+    this.checkLoggedin = this.checkLoggedin.bind(this)
+    this.continueLogin = this.continueLogin.bind(this)
     this.fileInput = React.createRef();
- 
- 
-    this.status = {
-      NEW: 0,
-      LOGGED: 1,
-      GUEST: 2,
 
-    }
+    this.cookies = new Cookies();
+
 
     this.state = {
         page: 0,
@@ -48,30 +46,59 @@ class App extends React.Component {
         imageSet: false,
 
         token: "",
-        authenticated: this.status.NEW,
+        authenticated: false,
         name: "",
 
 
     };
   }
 
+  checkLoggedin(){
+    let token = this.cookies.get("Goose Session")
+    axios({
+      method: "post",
+      url: "/checkCookie",
+      headers: {'Content-Type': 'application/json' },
+      data:{
+          token: token,
+      }
+    })
+    .then((res) =>{
+      console.log(res.data);
+      if (res.data[0] === "true"){
+        this.setState({authenticated: true});
+        this.setState({name: res.data[1]});
+        this.setState({token: res.data[2]});
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+      this.setState({error: err})
+    })
+   
+    
+  }
+
   setTokenLogin(token, name){
     this.setState({token: token})
     this.setState({name: name})
-    this.setState({authenticated: this.status.LOGGED})
-    this.updateConvo()
+    this.setState({authenticated: true})
+    this.setState({homeConvo:this.state.homeConvo + 1})
   }
   
 
   guestLogin(name){
     console.log(name)
     this.setState({name: name})
-    this.setState({authenticated: this.status.GUEST})
+    this.setState({authenticated: true})
     this.setState({homeConvo:this.state.homeConvo + 1})
   }
 
   updateConvo(){ 
-    if (((this.state.authenticated === this.status.LOGGED || this.state.authenticated === this.status.GUEST) && this.state.homeConvo === 1) || 
+    // if (this.state.authenticated === true && this.state.homeConvo == 0){
+    //   this.setState({homeConvo: 2});
+    // }
+    if (((this.state.authenticated === true) && this.state.homeConvo === 1) || 
     (this.state.imageSet === true && (this.state.homeConvo === 3 )) || 
     (this.state.homeConvo === 0) ||
     (this.state.homeConvo === 4) || 
@@ -85,6 +112,10 @@ class App extends React.Component {
     if (this.state.homeConvo === 6){
       this.setState({page: 1})
     }
+  }
+
+  continueLogin(){
+    this.updateConvo()
   }
   
   returnConvo(){
@@ -184,8 +215,10 @@ class App extends React.Component {
           convo_prog={this.state.homeConvo} 
           message={home_messages[this.state.homeConvo]}
           validUpload = {this.state.validAnimal}
+          name = {this.state.name}
           login={this.login}
-          submission={this.handleSubmit} 
+          submission={this.handleSubmit}
+          continueLogin={this.continueLogin}
           change={this.handleChange} 
           convo={this.updateConvo}
           go_upload={this.goToUpload}
@@ -205,13 +238,41 @@ class App extends React.Component {
       <MapPage
         filename={this.state.filename}
         content={this.state.content}
+        authenticated={this.state.authenticated}
+        name = {this.state.name}
 
       />
+    }
+
+    let headerDisplay;
+    if (!this.state.authenticated){
+        headerDisplay =
+        <header>
+            <button className='header_button'>
+                About
+            </button>
+            <button className='header_button'>
+                Login
+            </button>
+            <img src={title} alt="Goose Home" className="title"/>
+        </header>
+    }
+    if (this.state.authenticated){
+        headerDisplay = 
+        <header>
+            <img src={title} alt="Goose Home" className="title"/>
+            <button className="headerUser">{this.state.name}</button>
+            <div className="userSelection">
+                <button className="userOptions"> My Account</button>
+                <button className="userOptions"> Logout</button>
+            </div>
+        </header>
     }
   
 
     return (
-      <div className = 'bg'>
+      <div className = 'bg' onLoad={this.checkLoggedin}>
+         {headerDisplay}
          {homePage}
          {mpPage}
       </div>

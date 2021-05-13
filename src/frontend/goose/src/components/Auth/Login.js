@@ -138,7 +138,7 @@ class Login extends React.Component {
     }
 
     handleRegister(){
-  
+        let error = {}
         if (this.validateRegister()){
             console.log("registered")
             axios({
@@ -152,15 +152,22 @@ class Login extends React.Component {
                 }
               })
               .then((res) =>{
-                console.log(res.data)
-                if (res.data[0]){
+                if (res.data[0] === "dupe"){
+                    error["login"] = "This Email already exists. Try a different account"
+                    this.setState({errors: error})
+                }
+                else if (res.data[0] === "false"){
+                    error["login"] = "Something went wrong creating the account. Try again later?"
+                    this.setState({errors: error})
+                }
+                else if (res.data[0]){
                     this.props.setTokenLogin(res.data[1], this.state.name)
                 }
               })
               .catch((err) => {
                 console.log(err)
-          
               })
+            
         }
     }
 
@@ -192,38 +199,48 @@ class Login extends React.Component {
             </div>
         }
 
-    return (
-
-        <div className='regRow'>
-
-            <form className='guestLog' onSubmit={this.handleGuest}>  
-                <div className='guestRow'>
-                    
+        let loginForm;
+        if (this.props.authenticated === false){
+            loginForm = 
+            <div className='regRow'>
+                <form className='guestLog' onSubmit={this.handleGuest}>  
+                    <div className='guestRow'>
                         <p className='guest'>New watcher?</p>
                         <input className='guestForm' onChange={(e) => this.setState({guest: e.target.value})} type="text" placeholder="Whats your name?" name="guest" pattern="[a-zA-Z0-9]+" required/>
                         <button className="registerButton" type="submit">Go</button>
-                    
-                </div>
-            </form>
-            <form className='log'  onSubmit={this.handleRequest}>
-                <div className="error">{this.state.errors.login}</div>
-                <div className='row'>
-                    <p className='ent'>Email</p>
-                    <input onChange={(e) => this.setState({email: e.target.value})} className='authForm' type="text" placeholder="Enter Email" name="email" required/>
-                </div>
-                <div className="error">{this.state.errors.email}</div>
-                <div className='row'>
-                    <p className='ent'>Password</p>
-                    <input onChange={(e) => this.setState({pass: e.target.value})} className='authForm' type="password" placeholder="Enter Password" name="psw" required/>
-                </div>
-                <div className="error">{this.state.errors.password}</div>
-                {confirmPass}
-                <div className='logrow'>
-                    <button onClick={(e) => this.setState({regMode: !this.state.regMode})}className="registerButton">{regButtonText}</button>
-                    <button  className="registerButton" type="submit">{loginButtonText}</button>
+                    </div>
+                </form>
+                <form className='log'  onSubmit={this.handleRequest}>
+                    <div className="error">{this.state.errors.login}</div>
+                    <div className='row'>
+                        <p className='ent'>Email</p>
+                        <input onChange={(e) => this.setState({email: e.target.value})} className='authForm' type="text" placeholder="Enter Email" name="email" required/>
+                    </div>
+                    <div className="error">{this.state.errors.email}</div>
+                        <div className='row'>
+                            <p className='ent'>Password</p>
+                            <input onChange={(e) => this.setState({pass: e.target.value})} className='authForm' type="password" placeholder="Enter Password" name="psw" required/>
+                        </div>
+                    <div className="error">{this.state.errors.password}</div>
+                    {confirmPass}
+                    <div className='logrow'>
+                        <button type="button" onClick={(e) => this.setState({regMode: !this.state.regMode})}className="registerButton">{regButtonText}</button>
+                        <button  className="registerButton" type="submit">{loginButtonText}</button>
+                    </div> 
+                </form>
+            </div>
+        }
+        if (this.props.authenticated === true){
+            loginForm = 
+            <div className='logged'>
+                <p>Continue as {this.props.name}</p>
+                <button onClick={this.props.continueLogin} className="registerButton">Go</button>
+            </div>
+        }
 
-                </div> 
-            </form>
+    return (
+        <div>
+            {loginForm}
         </div>
         );
     }
