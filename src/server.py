@@ -31,18 +31,33 @@ class server():
             file_img = request.files['file']
             animal_name = request.form.get('animal')
             filename = secure_filename(file_img.filename)
+            email = request.form.get('email')
+            isGuest = request.form.get('guest')
+            name = request.form.get('guestName')
          
             if filename != '':
-                file_img.save(os.path.join(self.upload_loc, filename))
+                path = os.path.join(self.upload_loc, filename)
+                file_img.save(path)
 
                 if self.model:
                     result_animal, result_percents = self.model.determine_image(os.path.join(self.upload_loc, filename))
                     result = self.check_animal(result_animal, result_percents)
-            
+
+                    res = False
                     if result in [0,1,2,3,4]:
+                        
+                        if isGuest == "true":
+                            res = self.database.insertAnimal(fileLoc=path, name=animal_name, desc="", authorEmail="", isGuest = True, guestName=name)
+                        else:
+                            print("good")
+                            res = self.database.insertAnimal(fileLoc=path, name=animal_name, desc="", authorEmail=email, isGuest = False, guestName=name)
+
+                    if res:
                         return jsonify(["true", result_animal[result]])
                     else:
                         return jsonify(["false", result_animal[0]])
+
+
 
         @self.app.route("/register", methods=['POST'])
         def registration():
@@ -52,7 +67,7 @@ class server():
             if token == "dupe":
                 return make_response(jsonify(["dupe"]))
             if token:
-                res = make_response(jsonify(["true", token, result['name']]))
+                res = make_response(jsonify(["true", token, result['name'], result['email']]))
                 res.set_cookie('Goose Session', token, max_age=3600, secure=True)
                 return res
             else:
@@ -67,7 +82,7 @@ class server():
             if token:
                 user = self.database.findUser("email", result['email'])
                 name = user["name"]
-                res = make_response(jsonify(["true", token, name]))
+                res = make_response(jsonify(["true", token, name, result['email']]))
                 res.set_cookie('Goose Session', token, max_age=3600, secure=True)
                 return res
             else:
@@ -84,7 +99,7 @@ class server():
                     user = self.database.findUser("session_id", token)
                     if user == None:
                         return "false"
-                    return jsonify(["true", user["name"], token])
+                    return jsonify(["true", user["name"], token, user["email"]])
                 else:
                     return "false"
             return "false"

@@ -62,6 +62,7 @@ const MainPage = (props) => {
             filename={props.filename} 
             content={props.content}
             validUpload={props.validUpload}
+            animalName={props.animalName}
             />
         </section>
       }

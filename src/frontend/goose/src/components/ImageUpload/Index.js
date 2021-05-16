@@ -40,7 +40,7 @@ function ImageUpload(props) {
                 </div>
                 
             </form>
-            <input onChange={props.animal_name} className='nameForm' type="text" placeholder="Whats their name?" name="name" required/>
+            <input onChange={props.animalName} className='nameForm' type="text" placeholder="Whats their name?" name="name" required/>
             {/* <div className="error">{this.state.errors.login}</div> */}
         </div>
         

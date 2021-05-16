@@ -1,19 +1,4 @@
-.header_button{
-    float: right;
-    border: transparent;
-    
-    font-family: Comfortaa, sans-serif;
-    color: #2f2f2f;
-    cursor:pointer;
 
-    font-size: 20px;
-    box-shadow: 0 6px 0px -2px #3f3f3f;
-    
-    height: 50px;
-    background:#efefef;
-    bottom: 0;
-
-}
 
 header{
     width: 100vw;

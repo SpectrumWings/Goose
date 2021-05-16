@@ -111,11 +111,62 @@ header, body {
   color: black;
 }
 
-.userOptions:hover{
+.header_button:hover, .userOptions:hover{
   background-color: #2f2f2f;
   color: white;
   transition: background-color 1s ease;
   transition: color 0.8s ease;
+}
+
+.headerOptions{
+  float:right;
+  display: flex;
+  right: 0px;
+  position: absolute;
+}
+
+.header_button{
+  border: transparent;
+  
+  font-family: Comfortaa, sans-serif;
+  color: #2f2f2f;
+  cursor:pointer;
+  padding: 0px 15px 0px  15px;
+
+  font-size: 20px;
+  z-index: 2;
+  height: 55px;
+  background:#efefef;
+}
+
+.titleRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  padding-left: 15px;
+  height: 55px;
+  width: 280px;
+  justify-content: center;
+}
+
+.titleRow:hover{
+  background-color: #cfcfcf;
+  transition: background-color 1s ease;
+}
+
+.gooseText{
+  color: #2f2f2f;
+  font-size: 35px;
+  margin:0;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.HomeText{
+  color: #afafaf;
+  font-size: 35px;
+  margin: 0;
+  margin-top: 10px;
 }
 
 @keyframes slide{

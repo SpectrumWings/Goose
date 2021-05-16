@@ -122,7 +122,7 @@ class Login extends React.Component {
                 console.log(res.data)
                 
                 if (res.data[0] === "true"){
-                    this.props.setTokenLogin(res.data[1], res.data[2])
+                    this.props.setTokenLogin(res.data[1], res.data[2], res.data[3])
                 }
                 else if (res.data[0] === "false"){
                     error["login"] = "Login Failed. Check your credentials"
@@ -161,7 +161,7 @@ class Login extends React.Component {
                     this.setState({errors: error})
                 }
                 else if (res.data[0]){
-                    this.props.setTokenLogin(res.data[1], this.state.name)
+                    this.props.setTokenLogin(res.data[1], this.state.name, res.data[2])
                 }
               })
               .catch((err) => {

@@ -53,6 +53,8 @@ class App extends React.Component {
 
         token: "",
         authenticated: false,
+        email: "",
+        isGuest: false,
         name: "",
     };
   }
@@ -73,6 +75,8 @@ class App extends React.Component {
 
   purgeState(){
     this.setState({authenticated: false});
+    this.setState({isGuest: false});
+    this.setState({email: ""})
     this.setState({name: ""});
     this.setState({filename: ""});
     this.setState({content: ""});
@@ -110,6 +114,7 @@ class App extends React.Component {
         this.setState({authenticated: true});
         this.setState({name: res.data[1]});
         this.setState({token: res.data[2]});
+        this.setState({email: res.data[3]});
       }
     })
     .catch((err) => {
@@ -118,10 +123,11 @@ class App extends React.Component {
     })
   }
 
-  setTokenLogin(token, name){
+  setTokenLogin(token, name, email){
     this.setState({token: token})
     this.setState({name: name})
     this.setState({authenticated: true})
+    this.setState({email: email})
     this.setState({homeConvo:this.state.homeConvo + 1})
   }
   
@@ -130,6 +136,7 @@ class App extends React.Component {
     console.log(name)
     this.setState({name: name})
     this.setState({authenticated: true})
+    this.setState({isGuest: true})
     this.setState({homeConvo:this.state.homeConvo + 1})
   }
 
@@ -204,6 +211,9 @@ class App extends React.Component {
     const data = new FormData()
     data.append("file", this.state.cc)
     data.append("animal", this.state.animalName)
+    data.append("guest", this.state.isGuest)
+    data.append("guestName", this.state.name)
+    data.append("email", this.state.email)
     axios({
       method: "post",
       url: "/uploadImage", 
@@ -298,19 +308,33 @@ class App extends React.Component {
     if (!this.state.authenticated){
         headerDisplay =
         <header>
-            <button className='header_button'>
-                About
-            </button>
-            <button className='header_button'>
-                Login
-            </button>
-            <img src={title} alt="Goose Home" className="title"/>
+            <div className="titleRow">
+              <p className="gooseText">GOOSE</p>
+              <p className="HomeText">HOME</p>
+            </div>
+            <div className="headerOptions">
+              <button className='header_button'>
+                  Filler
+              </button>
+              <button className='header_button'>
+                  About
+              </button>
+              <button className='header_button'>
+                  Login
+              </button>
+             
+            </div>
+            
         </header>
     }
     if (this.state.authenticated){
         headerDisplay = 
         <header>
-            <img src={title} alt="Goose Home" className="title"/>
+            <div className="titleRow">
+              <p className="gooseText">GOOSE</p>
+              <p className="HomeText">HOME</p>
+            </div>
+
             <button onClick={this.userDropdown} className="headerUser">{this.state.name}</button>
             
         </header>
