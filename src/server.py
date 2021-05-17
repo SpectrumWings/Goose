@@ -104,6 +104,20 @@ class server():
                     return "false"
             return "false"
 
+        @self.app.route("/fetchUAnimals", methods=['POST'])
+        def userAnimals():
+            req = request.get_json()
+            
+            email = req['email']
+            token = req['token']
+            print(email)
+            res = self.database.getUserAnimals(email)
+            if res != None:
+                return jsonify(res)
+            else:
+                return "false"
+
+
 
     def check_animal(self, animal_list, percent_list):
         for idx, ani in enumerate(animal_list):
@@ -113,3 +127,5 @@ class server():
                 if percent_list[idx] > 0.6:
                     return idx
         return None
+
+

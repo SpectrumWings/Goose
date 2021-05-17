@@ -41,9 +41,10 @@ class database():
 
     def insertAnimal(self, fileLoc, name, desc = "", authorEmail = "", isGuest = True, guestName = ""):
         if isGuest:
-            animal = {"animalName": name, "desc" : desc, "email": "", "guestName": guestName, "guest" : True, "file": fileLoc}
+            animal = {"animalName": name, "desc" : desc, "email": "", "guestName": guestName, "guest" : True, "file": fileLoc, "new": False}
         else:
-            animal = {"animalName": name, "desc": desc, "email": authorEmail, "guestName": guestName, "guest": False, "file": fileLoc}
+            self.animal_table.update_many({"email": authorEmail}, {"$set": {"new": False}}, upsert=False)
+            animal = {"animalName": name, "desc": desc, "email": authorEmail, "guestName": guestName, "guest": False, "file": fileLoc, "new": True}
         res = self.animal_table.insert_one(animal)
         if res:
             return res
@@ -70,6 +71,16 @@ class database():
             return token
         else:
             return None
+
+    def getUserAnimals(self, email):
+        query = {"email": email}
+        animals = list(self.animal_table.find(query))
+        print(animals)
+        for x in animals:
+            x.pop('_id')
+        if animals:
+            return animals
+        else: return None
 
 
     def read_json(self, file):

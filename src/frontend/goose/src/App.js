@@ -109,7 +109,7 @@ class App extends React.Component {
       }
     })
     .then((res) =>{
-      console.log(res.data);
+
       if (res.data[0] === "true"){
         this.setState({authenticated: true});
         this.setState({name: res.data[1]});
@@ -133,7 +133,7 @@ class App extends React.Component {
   
 
   guestLogin(name){
-    console.log(name)
+
     this.setState({name: name})
     this.setState({authenticated: true})
     this.setState({isGuest: true})
@@ -142,7 +142,7 @@ class App extends React.Component {
 
   updateConvo(){ 
     if (this.state.authenticated === true && this.state.homeConvo == 0){
-      console.log("peewee")
+
       this.setState({homeConvo: 2});
     }
     else if (((this.state.authenticated === true) && this.state.homeConvo === 1) || 
@@ -221,7 +221,7 @@ class App extends React.Component {
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((res) =>{
-      console.log(res.data)
+
       if (res.data[0] === "true"){
         this.setState({prediction: res.data[1]})
         this.setState({validAnimal: true})
@@ -290,6 +290,7 @@ class App extends React.Component {
         content={this.state.content}
         authenticated={this.state.authenticated}
         name = {this.state.name}
+        email = {this.state.email}
 
       />
     }
